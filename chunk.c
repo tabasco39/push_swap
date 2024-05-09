@@ -20,12 +20,16 @@ t_list *get_last_min(t_list *pile)
 
     i = 0;
     min = pile;
-    temp = pile->next;
-    while (i < size_list(pile) - 1)
+    temp = pile;
+    while (min && min->group != -1)
+    {
+        i++;
+        min = min->next;
+    }
+    while (temp)
     {
         if (temp->number < min->number && temp->group == -1)
             min = temp;
-        i++;
         temp = temp->next;
     }
     return (min);
@@ -36,24 +40,26 @@ void populate_group(t_list **pile, int div)
     int groups_interval;
     int i;
     int j;
+    int size;
     int group;
     t_list *min;
 
     i = 0;
     j = 0;
+    size = 0;
     group = 1;
     groups_interval = size_list(*pile) / div;
-    printf("==> %d\n", groups_interval);
     if (groups_interval % 2 != 0)
         groups_interval++;
     while (i < size_list(*pile))
     {
         j = 0;
-        while (j < groups_interval)
+        while (j < groups_interval && size < size_list(*pile))
         {
             min = get_last_min(*pile);
             min->group = group;
             j++;
+            size++;
         }
         group++;
         i++;

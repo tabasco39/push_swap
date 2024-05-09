@@ -154,13 +154,18 @@ int main(int argc, char **argv)
 	}
 
 	init_list(&list_1, argv);
-	populate_group(&list_1, 2);
-	display_list(list_1);
+	populate_group(&list_1, 6);
 
-	// while (list_1)
-	// {
-	// 	push(&list_2, &list_1, "pb\n");
-	// }
+	int	group = 6;
+	while (list_1)
+	{
+		while (list_1->group == group)
+		{	
+			push(&list_2, &list_1, "pb\n");
+		}
+		group--;
+	}
+	display_list(list_2);
 
 	// push(&list_1, &list_2, "pa\n");
 	// push(&list_1, &list_2, "pa\n");

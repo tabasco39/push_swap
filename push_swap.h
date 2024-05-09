@@ -20,6 +20,7 @@
 typedef struct t_list
 {
     int             number;
+    int             group;
     struct t_list  *next;
 } t_list;
 
@@ -44,6 +45,7 @@ void move_to_top(t_list **pile, t_list *to_move, char *instruction);
 int calcul_cost(t_list *pile_a, t_list *pile_b, int number);
 t_list *get_min(t_list **list);
 
+void populate_group(t_list **pile, int div);
 
 void    display_list(t_list *list);
 
