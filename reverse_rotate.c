@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:49:08 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/04/30 10:43:40 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:38:40 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void    reverse_rotate(t_list **list, char *instruction)
     last_node->next = *list;
     prev_last->next = NULL;
     *list = last_node;
-    printf("%s", instruction);
+    if (instruction[0] != '\0')
+        printf("%s", instruction);
 }

@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 09:25:10 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/04/30 10:19:17 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:38:24 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void rotate(t_list **list, char *instruction)
         last_node = last_node->next;
     last_node->next = temp;
     temp->next = NULL;
-    printf("%s", instruction);
+
+    if(instruction[0] != '\0')
+        printf("%s", instruction);
 }

@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:04:10 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/07 14:49:04 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:47:39 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void display_list(t_list *list)
 
 	while (list)
 	{
-		printf("%d->", list->number);
+		printf("(%d : %d)->\n", list->number, list->group);
 		list = list->next;
 	}
 	printf("NULL\n");
@@ -153,76 +153,22 @@ int main(int argc, char **argv)
 		return (0);
 	}
 
-	init_list(&list_1, argv); 
-	push(&list_2, &list_1, "pb\n");
-	push(&list_2, &list_1, "pb\n");
-	min_to_bottom(&list_2);
+	init_list(&list_1, argv);
+	populate_group(&list_1, 2);
+	display_list(list_1);
 
-	while (list_1)
-	{
-		push(&list_2, &list_1, "pb\n");
-	}
-
-	push(&list_1, &list_2, "pa\n");
-	push(&list_1, &list_2, "pa\n");
-
-
-	// while (tmp)
+	// while (list_1)
 	// {
-	// 	calcul_cost(list_2, list_1, list_2->number);
-	// 	tmp = tmp->next;
+	// 	push(&list_2, &list_1, "pb\n");
 	// }
-	// min_to_bottom(&list_2);
-	t_list *temp = list_2;
-	while (list_2)
-	{
-		sort(&list_2, &list_1);
-	}
-	t_list *min = get_min(&list_1);
-	move_to_top(&list_1, min, "a\n");
 
-	// add_to_list(&list_2, 4);
-
-
-	// add_to_list(&list_1, 3);
-	// add_to_list(&list_1, 6);
-
-	// int res = get_moving_position(list_1, list_2->number);
-	// display_list(list_1);
-	// printf("res : %d\n", res);
-
-	// t_list *min = get_min(&list_2);
-	// display_list(min);
-	// move_to_top(&list_2, min, "b\n");
-	// display_list(list_2);
-	// add_to_list(&list_2, 39);
-	// add_to_list(&list_2, 40);
-	// add_to_list(&list_2, 54);
-	// add_to_list(&list_2, 60);
-	// add_to_list(&list_2, 67);
-	// add_to_list(&list_2, 71);
-	// add_to_list(&list_2, 79);
-	// add_to_list(&list_2, 80);
-
-	// printf("diff : %d\n", get_min_difference(list_2, list_1->number)->number);
-	// int pos = get_moving_position(list_2, get_min_difference(list_2, list_1->number)->number) - 1;
-	// printf("position on B : %d\n",get_moving_position(list_2, get_min_difference(list_2, list_1->number)->number) - 1);
-	// sort(&list_1, &list_2);
-	// sort(&list_1, &list_2);
-	// printf("sort : ");
-	// display_list(list_2);
-	
-
-	// swap(&list_1, "sa \n");
-	// push(&list_2, &list_1, "pb\n");
-	// push(&list_2, &list_1, "pb\n");
-	// push(&list_2, &list_1, "pb\n");
-	// rotate_double(&list_1, &list_2);
-	// reverse_rotate_double(&list_1, &list_2);
-	// swap(&list_1, "sa \n");
 	// push(&list_1, &list_2, "pa\n");
 	// push(&list_1, &list_2, "pa\n");
-	// push(&list_1, &list_2, "pa\n")
-	// display_list(list_2);
-	// display_list(list_1);
+	// t_list *temp = list_2;
+	// while (list_2)
+	// {
+	// 	sort(&list_2, &list_1);
+	// }
+	// t_list *min = get_min(&list_1);
+	// move_to_top(&list_1, min, "a\n");
 }
