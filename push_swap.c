@@ -136,6 +136,19 @@ int manage_input_number(char **argv)
 	return (i);
 }
 
+void push_group(t_list **dest, t_list **src, int group)
+{
+	t_list *temp;
+
+	temp = *src;
+	while(temp)
+	{
+		if (temp->group == group)
+			push(dest, src, "pb\n");
+		temp = temp->next;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int i;
@@ -156,16 +169,13 @@ int main(int argc, char **argv)
 	init_list(&list_1, argv);
 	populate_group(&list_1, 6);
 
-	int	group = 6;
-	while (list_1)
-	{
-		while (list_1->group == group)
-		{	
-			push(&list_2, &list_1, "pb\n");
-		}
-		group--;
-	}
-	display_list(list_2);
+	// int	group = 6;
+	// while (list_1)
+	// {
+	// 	push_group(&list_2, &list_1, group);
+	// 	group--;
+	// }
+	display_list(list_1);
 
 	// push(&list_1, &list_2, "pa\n");
 	// push(&list_1, &list_2, "pa\n");
