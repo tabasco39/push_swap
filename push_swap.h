@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:23:49 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/07 10:58:49 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:27:24 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct t_list
 {
     int             number;
     int             group;
+    int             cost;
     struct t_list  *next;
 } t_list;
 
@@ -36,7 +37,7 @@ void    rotate(t_list **list, char *instruction);
 void    rotate_double(t_list **list_a, t_list **list_b);
 void    reverse_rotate(t_list **list, char *instruction);
 void    reverse_rotate_double(t_list **list_a, t_list **list_b);
-void    sort(t_list **list_a, t_list **list_b);
+void    sort(t_list **list_a, t_list **list_b, int *group);
 char	*ft_strjoin(char const *s1, char const *s2);
 void    min_to_bottom(t_list **pile);
 t_list *get_min_difference(t_list *pile_b, int number);

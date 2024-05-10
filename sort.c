@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:03:59 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/09 14:25:40 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:55:55 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,22 @@ void exec_instruction(t_list **pile, int index, int mid, char *instruction)
 }
 
 //***** get index of minimum value in pile *****
-int get_min_position(int *array, t_list *pile_b)
+t_list *get_min_cost_node(t_list **list)
 {
-	int i;
-	int j;
+	t_list *temp_next;
+	t_list *min;
 
-	i = 0;
-	j = 0;
-	while (i < size_list(pile_b) - 1)
+	min = *list;
+	while (min->cost == -1)
+		min = min->next;
+	temp_next = (*list)->next;
+	while (temp_next)
 	{
-		if (array[j] > array[i])
-			j = i;
-		i++;
+		if (min->cost > temp_next->cost && min->cost != -1 && temp_next->cost != -1)
+			min = temp_next;
+		temp_next = temp_next->next;
 	}
-	return (j);
+	return (min);
 }
 
 //***** get address of minimum value in the pile *****
@@ -314,30 +316,20 @@ void move_to_bottom(t_list **pile, t_list *to_move, char *instruction)
 	free(reverse_rotate_instruction);
 }
 
-t_list *get_min_cost(t_list *pile_b, t_list *pile_a)
+t_list *get_min_cost(t_list *pile_b, t_list *pile_a, int group)
 {
-	int cost_list[size_list(pile_b)];
-	int i;
-	int min_index;
 	t_list *result;
 	t_list *temp;
 
-	i = 0;
 	result = pile_b;
 	temp = pile_b;
-	while (temp != NULL)
+	while (temp)
 	{
-		cost_list[i] = calcul_cost(pile_b, pile_a, temp->number);
-		i++;
+		if(temp->group == group)
+			temp->cost = calcul_cost(pile_b, pile_a, temp->number);
 		temp = temp->next;
 	}
-	min_index = get_min_position(cost_list, pile_b);
-	i = 0;
-	while (i < min_index)
-	{
-		result = result->next;
-		i++;
-	}
+	result = get_min_cost_node(&pile_b);
 	return (result);
 }
 
@@ -396,7 +388,8 @@ void move_bottom_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 			j++;
 			move_b--;
 		}
-		move_to_top(pile_a, search(*pile_a, i), "a\n");
+		if (size_list(*pile_a) >= i)
+			move_to_top(pile_a, search(*pile_a, i), "a\n");
 		push(pile_a, pile_b, "pa\n");
 	}
 	else
@@ -408,7 +401,8 @@ void move_bottom_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 			j++;
 			move_a--;
 		}
-		move_to_top(pile_b, search(*pile_b, j), "b\n");
+		if (size_list(*pile_b) >= j)
+			move_to_top(pile_b, search(*pile_b, j), "b\n");
 		push(pile_a, pile_b, "pa\n");
 	}
 }
@@ -421,15 +415,27 @@ void exec_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 		move_bottom_optim(pile_a, pile_b, i, j);
 }
 
-void sort(t_list **pile_b, t_list **pile_a)
+int	check_group(t_list *pile, int group)
+{
+	while (pile)
+	{
+		if(pile->group == group)
+			return (1);
+		pile = pile->next;
+	}
+	return (0);
+}
+
+void sort(t_list **pile_b, t_list **pile_a, int *group)
 {
 	int i;
 	t_list *min_cost;
 	t_list *max;
 
 	i = 1;
-
-	min_cost = get_min_cost(*pile_b, *pile_a);
+	if(check_group(*pile_b, *group) == 0)
+		*group -= 1;
+	min_cost = get_min_cost(*pile_b, *pile_a, *group);
 	t_list *min_on_a = get_min(pile_a);
 	max = get_max(pile_a);
 

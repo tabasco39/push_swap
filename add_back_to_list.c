@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:25:27 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/09 15:19:07 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/10 10:31:54 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void    add_back_to_list (t_list **list, int number)
         *list = new_node;
         new_node->number = number;
         new_node->group = -1;
+        new_node->cost = -1;
         new_node->next = NULL;
     }
     else
@@ -32,6 +33,7 @@ void    add_back_to_list (t_list **list, int number)
             temp = (temp->next);
         new_node->number = number;
         new_node->group = -1;
+        new_node->cost = -1;
         new_node->next = NULL;
         temp->next = new_node;
     }

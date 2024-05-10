@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:04:10 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/09 15:47:39 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:58:30 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void display_list(t_list *list)
 
 	while (list)
 	{
-		printf("(%d : %d)->\n", list->number, list->group);
+		printf("(%d : %d : %d)->\n", list->number, list->group, list->cost);
 		list = list->next;
 	}
 	printf("NULL\n");
@@ -144,8 +144,14 @@ void push_group(t_list **dest, t_list **src, int group)
 	while(temp)
 	{
 		if (temp->group == group)
-			push(dest, src, "pb\n");
-		temp = temp->next;
+		{
+			move_to_top(src, temp, "a\n");
+			push(dest, src,"pb\n");
+			temp = *src;
+			// display_list(temp);
+		}
+		else
+			temp = temp->next;
 	}
 }
 
@@ -154,6 +160,8 @@ int main(int argc, char **argv)
 	int i;
 	t_list *list_1;
 	t_list *list_2;
+	int		group;
+	int		div;
 
 	list_1 = NULL;
 	list_2 = NULL;
@@ -166,24 +174,23 @@ int main(int argc, char **argv)
 		return (0);
 	}
 
+	group = 1;
+	div = 6;
 	init_list(&list_1, argv);
-	populate_group(&list_1, 6);
+	populate_group(&list_1, div);
 
-	// int	group = 6;
-	// while (list_1)
-	// {
-	// 	push_group(&list_2, &list_1, group);
-	// 	group--;
-	// }
-	display_list(list_1);
-
-	// push(&list_1, &list_2, "pa\n");
-	// push(&list_1, &list_2, "pa\n");
-	// t_list *temp = list_2;
-	// while (list_2)
-	// {
-	// 	sort(&list_2, &list_1);
-	// }
-	// t_list *min = get_min(&list_1);
-	// move_to_top(&list_1, min, "a\n");
+	while (list_1 && group <= div)
+	{
+		push_group(&list_2, &list_1, group);
+		group++;
+	}
+	push(&list_1, &list_2, "pa\n");
+	push(&list_1, &list_2, "pa\n");
+	t_list *temp = list_2;
+	while (list_2)
+	{
+		sort(&list_2, &list_1, &div);
+	}
+	t_list *min = get_min(&list_1);
+	move_to_top(&list_1, min, "a\n");
 }

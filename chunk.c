@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:28:58 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/09 15:49:30 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:35:56 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void populate_group(t_list **pile, int div)
     size = 0;
     group = 1;
     groups_interval = size_list(*pile) / div;
-    if (groups_interval % 2 != 0)
+    if (size_list(*pile) % div != 0)
         groups_interval++;
     while (i < size_list(*pile))
     {
