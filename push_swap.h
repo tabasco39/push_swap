@@ -47,6 +47,9 @@ int calcul_cost(t_list *pile_a, t_list *pile_b, int number);
 t_list *get_min(t_list **list);
 
 void populate_group(t_list **pile, int div);
+char	**ft_split(char const *s, char c);
+size_t	ft_strlen(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 void    display_list(t_list *list);
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "./push_swap.h"
-size_t	ft_strlen(const char *s)
+size_t	ft_stlen(const char *s)
 {
 	int	i;
 
@@ -42,10 +42,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*result;
 	int		total_len;
 
-	total_len = ft_strlen(s1) + ft_strlen(s2);
+	total_len = ft_stlen(s1) + ft_stlen(s2);
 	result = (char *)malloc((total_len + 1) * sizeof(char));
 	i = 0;
-	j = ft_strlen(s1);
+	j = ft_stlen(s1);
 	if (!result)
 		return (NULL);
 	else
@@ -61,14 +61,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return ((char *)result);
 	}
 }
-
-/*
-#include <stdio.h>
-int main()
-{
-    char s1[] = "Bonjour";
-    char s2[] = "le monde";
-    char *result = ft_strjoin(s1, s2);
-    printf("result : %s \n", result);
-}
-*/

@@ -19,7 +19,7 @@ void init_list(t_list **list, char **argv)
 {
 	int i;
 
-	i = 1;
+	i = 0;
 	while (argv[i])
 	{
 		// add_to_list(list, ft_atoi(argv[i]));
@@ -81,11 +81,11 @@ int check_duplicate_number(char **argument)
 	int j;
 	int is_duplicate;
 
-	i = 1;
+	i = 0;
 	is_duplicate = 0;
 	while (argument[i])
 	{
-		j = 1;
+		j = 0;
 		while (argument[j])
 		{
 			if (ft_atoi(argument[i]) == ft_atoi(argument[j]) && i != j)
@@ -109,15 +109,11 @@ int check_extrem_int(int argument)
 
 /*####################################################*/
 
-void push_swap(int pile)
-{
-}
-
 int manage_input_number(char **argv)
 {
 	int i;
 
-	i = 1;
+	i = 0;
 	while (argv[i])
 	{
 		if (ft_atoi(argv[i]) == 0 && check_number(argv[i]) == 0 || check_extrem_int(ft_atoi(argv[i])) == 1)
@@ -155,6 +151,23 @@ void push_group(t_list **dest, t_list **src, int group)
 	}
 }
 
+char *join_arg(char **argv)
+{
+	int	i;
+	char *result;
+	char *instance;
+
+	i = 1;
+	result = "";
+	while (argv[i])
+	{
+		instance = ft_strjoin(argv[i], " ");
+		result = ft_strjoin(result, instance);
+		i++;
+	}
+	return (result);
+}
+
 int main(int argc, char **argv)
 {
 	int i;
@@ -165,32 +178,43 @@ int main(int argc, char **argv)
 
 	list_1 = NULL;
 	list_2 = NULL;
-	i = 1;
+	i = 0;
 	if (argc < 2)
 		return (0);
-	if (manage_input_number(argv) == 0)
+
+	char *result = join_arg(argv);
+	printf("result : %s\n", result);
+	char **array_of_args = ft_split(result,  ' ');
+
+	while (array_of_args[i])
+	{
+		printf("==> %s\n", array_of_args[i]);
+		i++;
+	}
+	
+	if (manage_input_number(array_of_args) == 0)
 	{
 		printf("ERROR \n");
 		return (0);
 	}
 
-	group = 1;
-	div = 6;
-	init_list(&list_1, argv);
-	populate_group(&list_1, div);
+	// group = 1;
+	// div = 6;
+	// init_list(&list_1, argv);
+	// populate_group(&list_1, div);
 
-	while (list_1 && group <= div)
-	{
-		push_group(&list_2, &list_1, group);
-		group++;
-	}
-	push(&list_1, &list_2, "pa\n");
-	push(&list_1, &list_2, "pa\n");
-	t_list *temp = list_2;
-	while (list_2)
-	{
-		sort(&list_2, &list_1, &div);
-	}
-	t_list *min = get_min(&list_1);
-	move_to_top(&list_1, min, "a\n");
+	// while (list_1 && group <= div)
+	// {
+	// 	push_group(&list_2, &list_1, group);
+	// 	group++;
+	// }
+	// push(&list_1, &list_2, "pa\n");
+	// push(&list_1, &list_2, "pa\n");
+	// t_list *temp = list_2;
+	// while (list_2)
+	// {
+	// 	sort(&list_2, &list_1, &div);
+	// }
+	// t_list *min = get_min(&list_1);
+	// move_to_top(&list_1, min, "a\n");
 }
