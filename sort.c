@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:03:59 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/10 15:55:55 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:14:58 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,19 +265,13 @@ void move_to_top(t_list **pile, t_list *to_move, char *instruction)
 		mid++;
 	if (index <= mid)
 	{
-		while (index != 1)
-		{
+		while (index-- != 1)
 			rotate(pile, rotate_instruction);
-			index--;
-		}
 	}
 	else
 	{
-		while (index != size_list(*pile) + 1)
-		{
+		while (index++ != size_list(*pile) + 1)
 			reverse_rotate(pile, reverse_rotate_instruction);
-			index++;
-		}
 	}
 	free(rotate_instruction);
 	free(reverse_rotate_instruction);
@@ -298,19 +292,13 @@ void move_to_bottom(t_list **pile, t_list *to_move, char *instruction)
 
 	if (index <= mid)
 	{
-		while (index != 0)
-		{
+		while (index-- != 0)
 			rotate(pile, rotate_instruction);
-			index--;
-		}
 	}
 	else
 	{
-		while (index != size_list(*pile))
-		{
+		while (index++ != size_list(*pile))
 			reverse_rotate(pile, reverse_rotate_instruction);
-			index++;
-		}
 	}
 	free(rotate_instruction);
 	free(reverse_rotate_instruction);
@@ -325,7 +313,7 @@ t_list *get_min_cost(t_list *pile_b, t_list *pile_a, int group)
 	temp = pile_b;
 	while (temp)
 	{
-		if(temp->group == group)
+		if (temp->group == group)
 			temp->cost = calcul_cost(pile_b, pile_a, temp->number);
 		temp = temp->next;
 	}
@@ -376,17 +364,12 @@ void move_top_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 
 void move_bottom_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 {
-	int move_a = size_list(*pile_a) + 1 - i;
-	int move_b = size_list(*pile_b) + 1 - j;
-	if (move_a >= move_b)
+	if (size_list(*pile_a) + 1 - i >= size_list(*pile_b) + 1 - j)
 	{
-		while (j < size_list(*pile_b) + 1)
+		while (j++ < size_list(*pile_b) + 1)
 		{
-
 			reverse_rotate_double(pile_a, pile_b);
 			i++;
-			j++;
-			move_b--;
 		}
 		if (size_list(*pile_a) >= i)
 			move_to_top(pile_a, search(*pile_a, i), "a\n");
@@ -394,12 +377,10 @@ void move_bottom_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 	}
 	else
 	{
-		while (i < size_list(*pile_a) + 1)
+		while (i++ < size_list(*pile_a) + 1)
 		{
 			reverse_rotate_double(pile_a, pile_b);
-			i++;
 			j++;
-			move_a--;
 		}
 		if (size_list(*pile_b) >= j)
 			move_to_top(pile_b, search(*pile_b, j), "b\n");
@@ -415,69 +396,80 @@ void exec_optim(t_list **pile_a, t_list **pile_b, int i, int j)
 		move_bottom_optim(pile_a, pile_b, i, j);
 }
 
-int	check_group(t_list *pile, int group)
+int check_group(t_list *pile, int group)
 {
 	while (pile)
 	{
-		if(pile->group == group)
+		if (pile->group == group)
 			return (1);
 		pile = pile->next;
 	}
 	return (0);
 }
 
-void sort(t_list **pile_b, t_list **pile_a, int *group)
+void move_the_max(t_list **pile_b, t_list **pile_a, t_list *max, t_list *min_cost)
+{
+	move_to_bottom(pile_a, max, "a\n");
+	move_to_top(pile_b, min_cost, "b\n");
+	push(pile_a, pile_b, "pa\n");
+	rotate(pile_a, "ra\n");
+}
+void move_the_min(t_list **pile_b, t_list **pile_a, t_list *min_cost, t_list *min_on_a)
+{
+	if (get_right_position(*pile_b, min_cost->number) < define_mid(size_list(*pile_b)) && get_right_position(*pile_a, min_on_a->number) < define_mid(size_list(*pile_a)) && size_list(*pile_b) > 1)
+		move_top_optim(pile_a, pile_b, get_right_position(*pile_a, min_on_a->number), get_right_position(*pile_b, min_cost->number));
+	else
+	{
+		move_to_top(pile_b, min_cost, "b\n");
+		move_to_top(pile_a, min_on_a, "a\n");
+		push(pile_a, pile_b, "pa\n");
+	}
+}
+
+void move_the_middle(t_list **pile_b, t_list **pile_a, t_list *min_cost)
 {
 	int i;
-	t_list *min_cost;
-	t_list *max;
+	int j;
+	t_list *right_position;
 
 	i = 1;
-	if(check_group(*pile_b, *group) == 0)
-		*group -= 1;
-	min_cost = get_min_cost(*pile_b, *pile_a, *group);
-	t_list *min_on_a = get_min(pile_a);
-	max = get_max(pile_a);
-
-	t_list *right_position = *pile_a;
+	j = get_right_position(*pile_b, min_cost->number);
+	right_position = *pile_a;
 	while (i < get_moving_position(*pile_a, min_cost->number))
 	{
 		right_position = right_position->next;
 		i++;
 	}
-	int j = get_right_position(*pile_b, min_cost->number);
-
-	if (max->number < min_cost->number)
-	{
-		move_to_bottom(pile_a, max, "a\n");
-		move_to_top(pile_b, min_cost, "b\n");
-		push(pile_a, pile_b, "pa\n");
-		rotate(pile_a, "ra\n");
-	}
-	else if (min_cost->number < min_on_a->number)
-	{
-		if (get_right_position(*pile_b, min_cost->number) < define_mid(size_list(*pile_b)) && get_right_position(*pile_a, min_on_a->number) < define_mid(size_list(*pile_a)) && size_list(*pile_b) > 1)
-			move_top_optim(pile_a, pile_b, get_right_position(*pile_a, min_on_a->number), get_right_position(*pile_b, min_cost->number));
-		else
-		{
-			move_to_top(pile_b, min_cost, "b\n");
-			move_to_top(pile_a, min_on_a, "a\n");
-			push(pile_a, pile_b, "pa\n");
-		}
-	}
+	if (i < define_mid(size_list(*pile_a)) && j < define_mid(size_list(*pile_b)) && size_list(*pile_b) > 1)
+		move_top_optim(pile_a, pile_b, i, j);
+	else if ((i > define_mid(size_list(*pile_a))) && j > define_mid(size_list(*pile_b)) && size_list(*pile_b) > 1)
+		move_bottom_optim(pile_a, pile_b, i, j);
 	else
 	{
-		if (i < define_mid(size_list(*pile_a)) && j < define_mid(size_list(*pile_b)) && size_list(*pile_b) > 1)
-			move_top_optim(pile_a, pile_b, i, j);
-		else if ((i > define_mid(size_list(*pile_a))) && j > define_mid(size_list(*pile_b)) && size_list(*pile_b) > 1)
-		{
-			move_bottom_optim(pile_a, pile_b, i, j);
-		}
-		else
-		{
-			move_to_top(pile_a, right_position, "a\n");
-			move_to_top(pile_b, min_cost, "b\n");
-			push(pile_a, pile_b, "pa\n");
-		}
+		move_to_top(pile_a, right_position, "a\n");
+		move_to_top(pile_b, min_cost, "b\n");
+		push(pile_a, pile_b, "pa\n");
 	}
+}
+
+
+void sort(t_list **pile_b, t_list **pile_a, int *group)
+{
+	int i;
+	t_list *min_cost;
+	t_list *max;
+	t_list *min_on_a;
+
+	// i = 1;
+	if (check_group(*pile_b, *group) == 0)
+		*group -= 1;
+	min_cost = get_min_cost(*pile_b, *pile_a, *group);
+	min_on_a = get_min(pile_a);
+	max = get_max(pile_a);
+	if (max->number < min_cost->number)
+		move_the_max(pile_b, pile_a, max, min_cost);
+	else if (min_cost->number < min_on_a->number)
+		move_the_min(pile_b, pile_a, min_cost, min_on_a);
+	else
+		move_the_middle(pile_b, pile_a, min_cost);
 }
