@@ -6,13 +6,13 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:00:05 by antsa             #+#    #+#             */
-/*   Updated: 2024/04/18 09:59:13 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:50:31 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-int	ft_atoi(char *str)
+long	ft_atoi(char *str)
 {
 	int	i;
 	int	result;

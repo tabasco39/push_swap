@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:39:19 by antsa             #+#    #+#             */
-/*   Updated: 2024/03/05 15:21:41 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:50:31 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ char	**initialize_data(char const *s, char c)
 		result[0] = NULL;
 	}
 	return (result);
+}
+
+void	__free(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
 }
 
 char	**ft_split(char const *s, char c)
