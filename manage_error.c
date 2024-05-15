@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 08:28:11 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 14:59:27 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:55:14 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int	check_duplicate_number(char **argument)
 	return (is_duplicate);
 }
 
-int	check_extrem_int(int argument)
+int	check_extrem_int(long argument)
 {
 	int	is_extrem;
 
 	is_extrem = 0;
-	if (argument == 2147483647 || argument == -2147483648)
+	if (argument > 2147483647 || argument < -2147483648)
 		return (1);
 	return (is_extrem);
 }
@@ -86,7 +86,7 @@ int	manage_input_number(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if (ft_atoi(argv[i]) == 0 && check_number(argv[i]) == 0
+		if ((ft_atoi(argv[i]) == 0 && check_number(argv[i]) == 0)
 			|| check_extrem_int(ft_atoi(argv[i])) == 1)
 			return (0);
 		i++;

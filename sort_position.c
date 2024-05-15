@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 08:21:08 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:09:53 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:40:06 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ t_list	*get_max(t_list **list)
 int	get_moving_position(t_list *pile_a, int number)
 {
 	int		i;
-	int		diff;
 	t_list	*min;
 	t_list	*max;
 	t_list	*temp;

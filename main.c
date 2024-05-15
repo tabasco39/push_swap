@@ -6,11 +6,17 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 08:34:55 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 16:14:11 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:43:13 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	ft_sort2(t_list **pile)
+{
+	if (size_list(*pile) == 2 && (*pile)->number > (*pile)->next->number)
+		swap(pile, "sa\n");
+}
 
 void	push_swap(char **argv)
 {
@@ -25,7 +31,9 @@ void	push_swap(char **argv)
 	init_list(&list_1, argv);
 	if (size_list(list_1) < 100)
 		div = 1;
-	if (do_nothing(list_1) != 0)
+	if (size_list(list_1) == 2)
+		ft_sort2(&list_1);
+	if (do_nothing(list_1) != 0 || size_list(list_1) == 2)
 		return ;
 	populate_group(&list_1, div);
 	populate_b(&list_1, &list_2, div);
@@ -36,19 +44,12 @@ void	push_swap(char **argv)
 	move_to_top(&list_1, min, "a\n");
 	free_list(&list_1);
 }
-void ft_sort2(t_list **pile)
-{
-	if ((*pile)->number > (*pile)->next->number)
-		swap(pile, "sa\n");
-}
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	char	*result;
 	char	**array_of_args;
 
-	i = 0;
 	if (argc < 2)
 		return (0);
 	result = join_arg(argv);

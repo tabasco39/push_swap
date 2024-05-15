@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:03:59 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 16:12:13 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:40:17 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	check_group(t_list *pile, int group)
 
 void	sort(t_list **pile_b, t_list **pile_a, int *group)
 {
-	int		i;
 	t_list	*min_cost;
 	t_list	*max;
 	t_list	*min_on_a;

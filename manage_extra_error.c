@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 08:31:37 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:03:20 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:55:00 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_instance_error(char *arg)
 		return (1);
 	while (arg[i] == ' ')
 		i++;
-	if (i != ft_strlen(arg))
+	if (i != (int)ft_strlen(arg))
 		return (0);
 	return (1);
 }

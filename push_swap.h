@@ -6,7 +6,7 @@
 /*   By: aranaivo <aranaivo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:23:49 by aranaivo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:51:29 by aranaivo         ###   ########.fr       */
+/*   Updated: 2024/05/15 07:37:14 by aranaivo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int					check_group(t_list *pile, int group);
 int					ft_isdigit(int c);
 int					check_number(char *argument);
 int					check_duplicate_number(char **argument);
-int					check_extrem_int(int argument);
+int					check_extrem_int(long argument);
 int					manage_input_number(char **argv);
 int					check_instance_error(char *arg);
 int					do_nothing(t_list *pile);
